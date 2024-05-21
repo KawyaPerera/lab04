@@ -16,7 +16,6 @@ class Teacher:
     def __str__(self):
         return f"Name: {self.name}, Subject: {self.subject}, Years of Experience: {self.years_of_experience}"
 
-
 class School:
     def __init__(self):
         self.teachers = []
@@ -24,6 +23,9 @@ class School:
     def add_teacher(self, name, subject, years_of_experience):
         new_teacher = Teacher(name, subject, years_of_experience)
         self.teachers.append(new_teacher)
+
+    def remove_teacher(self, name):
+        self.teachers = [teacher for teacher in self.teachers if teacher.name != name]
 
     def print_teachers(self):
         for teacher in self.teachers:
@@ -35,19 +37,15 @@ class School:
         total_experience = sum(teacher.years_of_experience for teacher in self.teachers)
         return total_experience / len(self.teachers)
 
-
 if __name__ == "__main__":
     school = School()
-
-    # Adding teachers
     school.add_teacher("Mr. Smith", "Math", 10)
     school.add_teacher("Ms. Johnson", "Science", 5)
     school.add_teacher("Mr. Brown", "History", 8)
-
-    # Printing teacher details
     print("Teacher Details:")
     school.print_teachers()
-
-    # Calculating average years of experience
+    school.remove_teacher("Ms. Johnson")
+    print("\nAfter removing Ms. Johnson:")
+    school.print_teachers()
     average_experience = school.average_experience()
     print(f"\nAverage Years of Experience: {average_experience:.2f}")
