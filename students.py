@@ -7,46 +7,50 @@ Original file is located at
     https://colab.research.google.com/drive/18lA2Bf1vkK2obd_BclVSRSE53Kf0Qm8-
 """
 
+# students.py
+
 class Student:
-    def __init__(self, name, age, subjects):
+    def __init__(self, student_id, name, age, subjects):
+        self.student_id = student_id
         self.name = name
         self.age = age
         self.subjects = subjects
 
+    def add_subject(self, subject):
+        self.subjects.append(subject)
+
+    def remove_subject(self, subject):
+        if subject in self.subjects:
+            self.subjects.remove(subject)
+
+    def update_info(self, name=None, age=None, subjects=None):
+        if name is not None:
+            self.name = name
+        if age is not None:
+            self.age = age
+        if subjects is not None:
+            self.subjects = subjects
+
     def __str__(self):
-        return f"Name: {self.name}, Age: {self.age}, Subjects: {', '.join(self.subjects)}"
+        return f"Student ID: {self.student_id}, Name: {self.name}, Age: {self.age}, Subjects: {', '.join(self.subjects)}"
 
-class School:
-    def __init__(self):
-        self.students = []
 
-    def add_student(self, name, age, subjects):
-        new_student = Student(name, age, subjects)
-        self.students.append(new_student)
+def main():
+    students = [
+        Student(1, "John Doe", 20, ["Math", "Science"]),
+        Student(2, "Jane Smith", 21, ["History", "English"]),
+        Student(3, "Emily Davis", 22, ["Biology", "Chemistry"])
+    ]
 
-    def remove_student(self, name):
-        self.students = [student for student in self.students if student.name != name]
+    for student in students:
+        print(student)
 
-    def print_students(self):
-        for student in self.students:
-            print(student)
+    print("\nUpdating John's age and subjects...\n")
+    students[0].update_info(age=21, subjects=["Math", "Science", "Art"])
 
-    def calculate_average_age(self):
-        if not self.students:
-            return 0
-        total_age = sum(student.age for student in self.students)
-        return total_age / len(self.students)
+    for student in students:
+        print(student)
+
 
 if __name__ == "__main__":
-    school = School()
-    school.add_student("Alice", 14, ["Math", "Science", "History"])
-    school.add_student("Bob", 15, ["English", "Art", "Geography"])
-    school.add_student("Charlie", 14, ["Math", "Science", "Physical Education"])
-    print("Student Details:")
-    school.print_students()
-    school.remove_student("Alice")
-    print("\nAfter removing Alice:")
-    school.print_students()
-    average_age = school.calculate_average_age()
-    print(f"\nAverage Age of Students: {average_age:.2f}")
-
+    main()
