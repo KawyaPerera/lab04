@@ -16,15 +16,16 @@ class Student:
     def __str__(self):
         return f"Name: {self.name}, Age: {self.age}, Subjects: {', '.join(self.subjects)}"
 
-
 class School:
     def __init__(self):
         self.students = []
-        self.teachers = []
 
     def add_student(self, name, age, subjects):
         new_student = Student(name, age, subjects)
         self.students.append(new_student)
+
+    def remove_student(self, name):
+        self.students = [student for student in self.students if student.name != name]
 
     def print_students(self):
         for student in self.students:
@@ -36,26 +37,16 @@ class School:
         total_age = sum(student.age for student in self.students)
         return total_age / len(self.students)
 
-    def add_teacher(self, teacher):
-        self.teachers.append(teacher)
-
-    def print_teachers(self):
-        for teacher in self.teachers:
-            print(teacher)
-
-
 if __name__ == "__main__":
     school = School()
-
-    # Adding students
     school.add_student("Alice", 14, ["Math", "Science", "History"])
     school.add_student("Bob", 15, ["English", "Art", "Geography"])
     school.add_student("Charlie", 14, ["Math", "Science", "Physical Education"])
-
-    # Printing student details
     print("Student Details:")
     school.print_students()
-
-    # Calculating average age
+    school.remove_student("Alice")
+    print("\nAfter removing Alice:")
+    school.print_students()
     average_age = school.calculate_average_age()
     print(f"\nAverage Age of Students: {average_age:.2f}")
+
